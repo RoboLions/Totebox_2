@@ -27,7 +27,8 @@ public class DriveTrain extends SubsystemBase {
   /**
    * Creates a new DriveSubsystem.
    */
-
+  
+   // pulls motors from robot map instances
    private static final WPI_TalonFX leftFrontMotor = RobotMap.leftFrontMotor;
    private static final WPI_TalonFX rightFrontMotor = RobotMap.rightFrontMotor;
    private static final WPI_TalonFX leftBackMotor = RobotMap.leftBackMotor;
@@ -38,7 +39,8 @@ public class DriveTrain extends SubsystemBase {
    public static int MOTOR_ENCODER_CONDES_PER_REV = 2048;
    public static final double DIAMETER_INCHES = 5.0;
    private static final double IN_TO_M = 0.0254;
-
+  
+   // measurement conversions
    public static final double WHEEL_DIAMETER = DIAMETER_INCHES *IN_TO_M;
    public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
 
@@ -120,24 +122,28 @@ public class DriveTrain extends SubsystemBase {
     rightBackMotor.setInverted(false);
   }
 
+  // function for getting yaw data from imu
   public double getYaw(){
     double[] ypr = new double[3];
     imu.getYawPitchRoll(ypr);
     return ypr[0];
   }
 
+  // function for getting pitch data from imu
   public double getPitch(){
     double[] ypr = new double[3];
     imu.getYawPitchRoll(ypr);
     return ypr[0];
   }
 
+  // function for getting roll data from imu
   public double getRoll(){
     double[] ypr = new double[3];
     imu.getYawPitchRoll(ypr);
     return ypr[0];
   }
 
+  // function for 
   public void ZeroYaw(){
     imu.setYaw(0, timeoutsMs);
     imu.setFusedHeading(0, timeoutsMs);
@@ -168,29 +174,29 @@ public class DriveTrain extends SubsystemBase {
     leftBackMotor.set(throttle + rotate);
     rightBackMotor.set(throttle - rotate);
   }
-
+  // throttle and rotate are set to 0
   public void stop(){
     drive(0,0);
   }
-
+  // function gives encoder position of left front motor
   public static double getLeftEncoderPosition(){
     return leftFrontMotor.getSelectedSensorPosition();
   }
-
+  // function gives encoder position of right front motor
   public static double getRightEncoderPosition(){
     return rightFrontMotor.getSelectedSensorPosition();
   }
-
+  // calcs distance based on left and right motor encoder positions
   public double distanceTravelledinTicks(){
     return ((getLeftEncoderPosition() + getRightEncoderPosition())/2);
   }
-
+  // calcs left side moter velocity based on encoder ticks
   public double getLeftEncoderVelocityMetersPerSecond(){
     double leftVelocityMPS = (leftFrontMotor.getSelectedSensorVelocity() * 10);
     leftVelocityMPS = leftVelocityMPS * METERS_PER_TICKS;
     return(leftVelocityMPS);
   }
-
+  // calcs right side moter velocity based on encoder ticks
   public double getRightEncoderVelocityMetersPerSecond(){
     double rightVelocityMPS = (rightFrontMotor.getSelectedSensorVelocity() * 10);
     rightVelocityMPS = rightVelocityMPS * METERS_PER_TICKS;
