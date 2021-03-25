@@ -1,13 +1,12 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
 public class RobotMap{
     public static final int LEFT_FRONT_PORT = 3;  
-    public static final int LEFT_BACK_PORT = 4;
-    public static final int RIGHT_FRONT_PORT = 1;
+    public static final int LEFT_BACK_PORT = 1;
+    public static final int RIGHT_FRONT_PORT = 4;
     public static final int RIGHT_BACK_PORT = 2;
     //assigns port numbers to each port
     public static WPI_TalonFX leftFrontMotor = new WPI_TalonFX(LEFT_FRONT_PORT); //setting instance of the left front Motor

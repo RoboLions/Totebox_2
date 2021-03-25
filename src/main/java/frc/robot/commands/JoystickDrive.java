@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class JoystickDrive extends CommandBase {
     private final DriveTrain driveTrain;
@@ -16,12 +17,13 @@ public class JoystickDrive extends CommandBase {
     }
 
     public void execute() {
-        double throttle = driverController.getY(Hand.kLeft);
+        double throttle = -driverController.getY(Hand.kLeft);
         double rotate = driverController.getX(Hand.kRight);
-
+        
         if(Math.abs(throttle) < 0.25) {
             throttle = 0;
         }
+        /*
 
         if(Math.abs(rotate) < 0.25) {
             rotate = 0;
@@ -36,7 +38,9 @@ public class JoystickDrive extends CommandBase {
         } else {
             throttle *= 0.8; // Normal Mode
         }
-
+        */
+        SmartDashboard.putNumber("Throttle", throttle);
+        SmartDashboard.putNumber("Rotate", rotate);
         driveTrain.drive(throttle, rotate);
 
     }

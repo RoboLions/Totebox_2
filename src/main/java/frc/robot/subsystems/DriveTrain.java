@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatusFrame;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
@@ -53,19 +54,12 @@ public class DriveTrain extends SubsystemBase {
 
    private final PigeonIMU imu = RobotMap.drive_imu;
 
-   
-
-
   public DriveTrain() {
+    /*
     leftFrontMotor.setNeutralMode(NeutralMode.Coast);
     rightFrontMotor.setNeutralMode(NeutralMode.Coast);
     leftBackMotor.setNeutralMode(NeutralMode.Coast);
     rightBackMotor.setNeutralMode(NeutralMode.Coast);
-
-    leftFrontMotor.setInverted(false);
-    rightFrontMotor.setInverted(true);
-    leftBackMotor.setInverted(false);
-    rightBackMotor.setInverted(true);
 
     leftFrontMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_2_Feedback0, 1);
     leftFrontMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
@@ -115,11 +109,11 @@ public class DriveTrain extends SubsystemBase {
     rightFrontMotor.setSensorPhase(false);
     leftBackMotor.setSensorPhase(true);
     rightBackMotor.setSensorPhase(false);
-
+    */
     leftFrontMotor.setInverted(false);
     rightFrontMotor.setInverted(true);
-    leftBackMotor.setInverted(true);
-    rightBackMotor.setInverted(false);
+    leftBackMotor.setInverted(false);
+    rightBackMotor.setInverted(true);
   }
 
   // function for getting yaw data from imu
@@ -160,19 +154,27 @@ public class DriveTrain extends SubsystemBase {
     rightFrontMotor.set(ControlMode.PercentOutput, 0);
     leftBackMotor.set(ControlMode.PercentOutput, 0);
     rightBackMotor.set(ControlMode.PercentOutput, 0);
-
-    leftFrontMotor.set(ControlMode.Follower, leftFrontMotor.getDeviceID());
-    leftBackMotor.set(ControlMode.Follower, leftBackMotor.getDeviceID());
-    rightFrontMotor.set(ControlMode.Follower, rightFrontMotor.getDeviceID());
-    rightFrontMotor.set(ControlMode.Follower, rightBackMotor.getDeviceID());
-    
   }
 
   public static void drive(double throttle, double rotate){
-    leftFrontMotor.set(throttle + rotate);
-    rightFrontMotor.set(throttle - rotate);
-    leftBackMotor.set(throttle + rotate);
-    rightBackMotor.set(throttle - rotate);
+    if(throttle != 0.0) {
+      throttle *= 0.3;
+    leftFrontMotor.set(throttle);
+    rightFrontMotor.set(throttle);
+    leftBackMotor.set(throttle);
+    rightBackMotor.set(throttle);
+    } else {
+      leftFrontMotor.set(0);
+    rightFrontMotor.set(0);
+    leftBackMotor.set(0);
+    rightBackMotor.set(0);
+    }
+    
+
+    SmartDashboard.putNumber("LF Velocity", leftFrontMotor.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("LB Velocity", leftBackMotor.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("RF Velocity", rightFrontMotor.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("RB Velocity", rightBackMotor.getSelectedSensorVelocity());
   }
   // throttle and rotate are set to 0
   public void stop(){
