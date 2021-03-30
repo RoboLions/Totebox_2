@@ -8,6 +8,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+//Two lines under are new from Team 1's code
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Limelight; //Probably will recognize later
 
 
 /**
@@ -22,6 +25,7 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   public static RobotContainer m_robotContainer;
+  private DriveTrain driveTrain = m_robotContainer.driveTrain; //Added this line
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -57,7 +61,7 @@ public class Robot extends TimedRobot {
    * chooser code above as well.
    */
   @Override
-  public void autonomousInit() {
+  public void autonomousInit() { 
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
@@ -81,6 +85,7 @@ public class Robot extends TimedRobot {
   @Override 
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
+    //team 1 has extra lines that have the lime light and put number function
   }
   @Override
   public void teleopInit() {}

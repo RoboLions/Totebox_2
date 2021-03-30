@@ -6,6 +6,7 @@ import frc.robot.commands.JoystickDrive;
 
 public class RobotContainer {
     public final DriveTrain driveTrain  = new DriveTrain(); //initializing the drive train
+    //team 1's drive subsystem was a variable, not a constant
     public static XboxController driveController = new XboxController(0); //initializing the drive controller on the xbox controller
 
     public RobotContainer() {
